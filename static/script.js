@@ -27,12 +27,73 @@ themeToggle.addEventListener('click', () => {
     updateToggleText(newTheme);
 });
 
-// Loading Animation
+// Progress Bar Animation System
 const form = document.getElementById('email-form');
-const loading = document.getElementById('loading');
+const loadingContainer = document.getElementById('loading-container');
 
-form.addEventListener('submit', () => {
-    loading.classList.remove('hidden');
+// Progress stages with realistic timing
+const progressStages = [
+    { percentage: 0, label: "Initializing scan...", step: 0 },
+    { percentage: 15, label: "Preprocessing email text...", step: 1 },
+    { percentage: 35, label: "Extracting linguistic features...", step: 1 },
+    { percentage: 55, label: "Running AI analysis...", step: 2 },
+    { percentage: 75, label: "Evaluating threat patterns...", step: 3 },
+    { percentage: 90, label: "Calculating confidence score...", step: 3 },
+    { percentage: 100, label: "Analysis complete!", step: 4 }
+];
+
+function updateProgress(stage) {
+    const progressFill = document.getElementById('progress-fill');
+    const progressPercentage = document.getElementById('progress-percentage');
+    const progressLabel = document.getElementById('progress-label');
+    
+    // Update progress bar
+    progressFill.style.width = stage.percentage + '%';
+    progressPercentage.textContent = stage.percentage + '%';
+    progressLabel.textContent = stage.label;
+    
+    // Update step indicators
+    document.querySelectorAll('.step').forEach((step, index) => {
+        const icon = step.querySelector('i');
+        step.classList.remove('active', 'completed');
+        
+        if (index < stage.step) {
+            step.classList.add('completed');
+            icon.className = 'fas fa-check-circle';
+        } else if (index === stage.step) {
+            step.classList.add('active');
+            icon.className = 'fas fa-cog fa-spin';
+        } else {
+            icon.className = 'fas fa-circle';
+        }
+    });
+}
+
+function showProgressBar() {
+    loadingContainer.classList.remove('hidden');
+    
+    let currentStage = 0;
+    
+    // Simulate realistic progress timing
+    const intervals = [800, 1200, 1500, 1000, 800, 600, 400];
+    
+    function nextStage() {
+        if (currentStage < progressStages.length) {
+            updateProgress(progressStages[currentStage]);
+            currentStage++;
+            
+            if (currentStage < progressStages.length) {
+                setTimeout(nextStage, intervals[currentStage - 1] || 500);
+            }
+        }
+    }
+    
+    // Start progress animation
+    nextStage();
+}
+
+form.addEventListener('submit', (e) => {
+    showProgressBar();
 });
 
 // Add some interactive effects

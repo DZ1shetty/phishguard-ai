@@ -38,9 +38,39 @@
             </button>
         </form>
 
-        <!-- Loading Spinner -->
-        <div id="loading" class="loading hidden">
-            <i class="fas fa-cog fa-spin"></i> Scanning for threats...
+        <!-- Loading Progress Bar -->
+        <div id="loading-container" class="loading-container hidden">
+            <div class="loading-header">
+                <i class="fas fa-shield-virus"></i>
+                <h3 id="loading-title">Analyzing Email Security...</h3>
+            </div>
+            
+            <div class="progress-wrapper">
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                    <div class="progress-percentage" id="progress-percentage">0%</div>
+                </div>
+                <div class="progress-label" id="progress-label">Initializing scan...</div>
+            </div>
+            
+            <div class="loading-steps">
+                <div class="step" id="step-1">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Text preprocessing</span>
+                </div>
+                <div class="step" id="step-2">
+                    <i class="fas fa-circle"></i>
+                    <span>Feature extraction</span>
+                </div>
+                <div class="step" id="step-3">
+                    <i class="fas fa-circle"></i>
+                    <span>AI model analysis</span>
+                </div>
+                <div class="step" id="step-4">
+                    <i class="fas fa-circle"></i>
+                    <span>Security assessment</span>
+                </div>
+            </div>
         </div>
 
         <!-- Result Card -->
